@@ -1,0 +1,62 @@
+This is one of the 3 important algorithms that is used in comparing 2 strings.
+This is probably the easiest one and also the worst one amoung the other 2, the simple reason is that in normal cases works for Tc of O(n+m) but in worst case 
+scenarios it has a time complexity of O(n*m).
+Now here the basic idea is to find out the testcode of str size m,(by simple formula), we also find the power by simple formula , the power helps us when we are 
+itrating through the main string and removing the initial char, then adding the new char and check
+---> Now the place where problem arrise is when both of the values of testcode hashcode are same but they dont match, its here we get the worst time complexity.
+
+Vid refferece-> https://www.youtube.com/watch?v=H4VrKHVG5qI(tushar sir)
+Code ref-> https://leetcode.com/problems/repeated-string-match/discuss/416144/Rabin-Karp-algorithm-C%2B%2B-implementation
+Problem ref->https://leetcode.com/problems/repeated-string-match/
+
+#include <bits/stdc++.h>
+#include <math.h>
+using namespace std;
+
+#define ll long long
+
+int rabin_karb(string a ,string b)
+{
+    if(a == "" or b == "") 
+    return -1;
+    int n=a.size();
+    int m=b.size();
+    int mod=10000;
+    int power=1;
+    int hashcode=0;
+    int testcode=0;
+
+    for(int i=0;i<m;i++)
+    power=(power*31)%mod;
+
+    for(int i=0;i<m;i++)
+    testcode=(testcode*31+b[i])%mod;
+    
+    for(int i=0;i<n;i++)
+    {
+        hashcode=(hashcode*31+a[i])%mod;
+        if(i<m-1)
+        continue;
+        if(i>=m)
+        hashcode=(hashcode-a[i-m]*power)%mod;
+        if(hashcode<0)
+        hashcode+=mod;
+        if(hashcode==testcode)
+        {
+            if(a.substr(i-m+1,m)==b)
+            return i-m+1;
+        }
+
+       
+    }
+     return -1;
+
+}
+int main()
+{
+    string a,b;
+    cin>>a>>b;
+    cout<<rabin_karb(a,b);
+    return 0;
+
+}
