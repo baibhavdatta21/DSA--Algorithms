@@ -1,0 +1,87 @@
+
+This algorithm is one of the 3 algorithms that is used to compare 2 strings, Unlike knieve approach it can do it in a TC->O(n+m)
+In an intreview is comparing of 2 strings comes up you can use this methord.
+
+Here we make an lps array whose size is same as that of our target array, in the lps we the calculate the larget common prefix string which is also a suffix
+this helps us to jump to a index where a match can be possible when chars of substring don't match. For making this array we use a tc->O(m) and sc->O(m)
+
+After making this we use comparison to find out the indexes where common substrings can be found.
+
+Article ref->https://www.geeksforgeeks.org/kmp-algorithm-for-pattern-searching/
+Vid ref->https://www.youtube.com/watch?v=GTJr8OvyEVQ
+Problem ref->https://leetcode.com/problems/implement-strstr/
+Problem ref2->https://www.interviewbit.com/problems/minimum-characters-required-to-make-a-string-palindromic/submissions/(VVVI)
+
+#include <bits/stdc++.h>
+#include <math.h>
+using namespace std;
+
+#define ll long long
+
+void computelps(vector<int> &lps,string b)
+{
+    int n=b.size();
+    int i=1;
+    int len=0;
+    lps[0]=0;
+    while(i<n)
+    {
+        if(b[i]==b[len])
+        {
+            len++;
+            lps[i]=len;
+            i++;
+        }
+        else
+        {
+            if(len!=0)
+            {
+                len=lps[len-1];
+            }
+            else
+            {
+                lps[i]=0;
+                i++;
+            }
+        }
+    }
+}
+
+int kmp(string a, string b)
+{
+    int n=a.size();
+    int m=b.size();
+    vector<int> lps(m);
+    computelps(lps,b);
+    int i=0;
+    int j=0;
+    while(i<n)
+    {
+        if(a[i]==b[j])
+        {
+            i++;
+            j++;
+
+        }
+        if(j==m)
+        {
+            return i-j;
+        }    
+        else if(i<n && a[i]!=b[j])
+        {
+            if(j!=0)
+            j=lps[j-1];
+            else
+            i++;
+        }
+    }
+    return -1;
+}
+int main()
+{
+    string a,b;
+    cin>>a>>b;
+    cout<<kmp(a,b);
+    return 0;
+
+}
