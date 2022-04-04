@@ -6,6 +6,7 @@ which is also a suffix ans a prefix. In z we have to contatinate the string and 
 vid ref->https://www.youtube.com/watch?v=CpZh4eF8QBw&t=928s(best)
 article ref->https://www.geeksforgeeks.org/z-algorithm-linear-time-pattern-searching-algorithm/
 problem ref->https://leetcode.com/problems/implement-strstr/
+problem ref 2->leetcode biweekly 4th problem ->https://leetcode.com/problems/sum-of-scores-of-built-strings/
 
 
 #include <bits/stdc++.h>
