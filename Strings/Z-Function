@@ -1,6 +1,6 @@
 It is one of the 3 methords used in matching of strnigs, It is a good approach, It does it in a time complexity of O(n+m)
 Just like the kmp algo here also we make another array z-array and try to compute the ans
-the z-array and lps array of kmp are different, here z array gives the lengest substring which is also a prefix, lps array gives the length of the longest array 
+the z-array and lps array of kmp are different, here z array gives the longest substring which is also a prefix, lps array gives the length of the longest array 
 which is also a suffix ans a prefix. In z we have to contatinate the string and then use it, both are diffent algos yet have the same time complexty.
 
 vid ref->https://www.youtube.com/watch?v=CpZh4eF8QBw&t=928s(best)
