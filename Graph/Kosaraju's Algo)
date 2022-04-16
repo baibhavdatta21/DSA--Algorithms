@@ -1,0 +1,68 @@
+It is used for finding the Strongly Connected Components in a graph for ref,check the copy, for vid ref go for tushar sir and striver
+
+
+void dfs2(int i,vector<int>&vis2,vector<int> adj2[])
+	{
+	    vis2[i]=0;
+	    for(auto it:adj2[i])
+	    {
+	        if(vis2[it]==1)
+	        {
+	           
+	            dfs2(it,vis2,adj2);
+	        }
+	    }
+	}
+	void dfs(int i,stack<int>&st,vector<int>&vis,vector<int> adj[])
+	{
+	    vis[i]=true;
+	    for(auto it:adj[i])
+	    {
+	        if(vis[it]==0)
+	        {
+	            dfs(it,st,vis,adj);
+	        }
+	    }
+	    st.push(i);
+	}
+    int kosaraju(int n, vector<int> adj[])
+    {
+        //code here
+        vector<int>vis(n,0);
+        stack<int>st;
+        
+        for(int i=0;i<n;i++)
+        {
+            if(vis[i]==0)
+            {
+                dfs(i,st,vis,adj);
+            }
+        }
+        
+        
+        vector<int>adj2[n];
+        
+        for(int i=0;i<n;i++)
+        {
+            for(auto it:adj[i])
+            {
+                adj2[it].push_back(i);
+            }
+        }
+        int count=0;
+        //vector<int>vis2(n,0);
+        while(!st.empty())
+        {
+            int a=st.top();
+            //cout<<a;
+            st.pop();
+            {
+                if(vis[a]==1)
+                {
+                    count++;
+                    dfs2(a,vis,adj2);
+                }
+            }
+        }
+        return count;
+    }
