@@ -1,0 +1,136 @@
+void compute_lps_kmp(vector<int>&lps,string txt)
+{
+    
+    int i=1;
+    int len=0;
+    lps[0]=0;
+    int n=txt.size();
+    while(i<n)
+    {
+        if(txt[i]==txt[len])
+        {
+            len++;
+            lps[i]=len;
+            i++;
+        }
+        else
+        {
+            if(len!=0)
+                len=lps[len-1];
+            else
+            {
+                lps[i]=0;
+                i++;
+            }
+        }
+    }
+}
+void compute_z_zfun(vector<int>&z,string s)
+{
+
+    int n=s.size();
+    int l=0;
+    int r=0;
+    z[0]=0;
+    for(int i=1;i<n;i++)
+    {
+        if(i>r)
+        {
+            l=r=i;
+            while(r<n && s[r]==s[r-l])
+                r++;
+            z[i]=r-l;
+            r--;
+        }
+        else
+        {
+            int k1=i-l;
+            if(z[k1]<(r-i+1))
+                z[i]=z[k1];
+            else
+            {
+                l=i;
+                while(r<n && s[r]==s[r-l])
+                r++;
+                z[i]=r-l;
+                r--;
+            }
+        }
+    }
+}
+void solver()
+{
+    string txt,pattern;
+    cin>>txt>>pattern;
+    int n=txt.size();
+    int m=pattern.size();
+
+    string for_z=pattern+'$'+txt;
+
+    int sz=for_z.size();
+    vector<int>lps(m,0);
+    vector<int>z(sz,0);
+    compute_lps_kmp(lps,pattern);
+    compute_z_zfun(z,for_z);
+    int i=0;
+    int j=0;
+
+    //kmp
+    for(int i=0;i<m;i++)
+        cout<<lps[i]<<" ";
+    cout<<endl;
+    while(i<n)
+    {
+        if(txt[i]==pattern[j])
+        {
+            i++;
+            j++;
+            if(j==m)
+                {
+                    cout<<"->"<<i-j<<endl;
+                    break;
+                }
+        }
+        else
+        {
+            if(j!=0)
+                j=lps[j-1];
+            else
+                i++;
+        }
+
+    }
+    //z-Algo
+    for(int i=0;i<sz;i++)
+        cout<<z[i]<<" ";
+    cout<<endl;
+    for(int i=0;i<sz;i++)
+    {
+        if(z[i]>=m)
+        {
+            cout<<"->"<<i-m-1;
+            break;
+        }
+    }
+    
+
+
+
+
+
+}
+signed main()
+{
+    fastIO;
+#ifndef ONLINE_JUDGE
+        freopen("in.txt","r",stdin);
+        freopen("out.txt","w",stdout);
+#endif 
+    int t=1;
+    //cin>>t;
+    while(t--)
+    {
+       solver();
+    }  
+    return 0;
+}
